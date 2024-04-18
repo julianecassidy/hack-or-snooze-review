@@ -64,7 +64,6 @@
 </nav>
 
 <div class="container mb-5">
-
   <!-- area for stories (all stories, user stories, favorites) -->
   <section class="Stories">
 
@@ -77,6 +76,38 @@
     <ol id="AllStoriesList" class="stories-list"></ol>
 
   </section>
+
+  <!-- Story form -->
+  <form id="StoryForm" class="account-form">
+    <h4 class="mb-3">Add a Story</h4>
+    <div class="mb-3">
+      <label for="StoryForm-title" class="form-label">Title</label>
+      <input
+          id="StoryForm-title"
+          class="form-control"
+          autocomplete="current-title">
+    </div>
+    <div class="mb-3">
+      <label for="StoryForm-author" class="form-label">Author</label>
+      <input
+          id="StoryForm-author"
+          type="author"
+          class="form-control"
+          autocomplete="current-author">
+    </div>
+    <div class="mb-3">
+      <label for="StoryForm-url" class="form-label">Url</label>
+      <input
+          id="StoryForm-url"
+          type="url"
+          class="form-control"
+          autocomplete="current-url">
+    </div>
+    <div id="StoryForm-fail" class="d-none alert alert-danger">
+      Failed to Add Story
+    </div>
+    <button type="submit" class="btn btn-primary">Add Story</button>
+  </form>
 
   <!-- Login form -->
   <form id="LoginForm" class="account-form d-none">

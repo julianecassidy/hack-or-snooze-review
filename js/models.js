@@ -102,17 +102,21 @@ class StoryList {
     const data = await response.json();
     const newStory = data.story;
 
-    return new Story({
+    const formattedStory = {
       storyId: newStory.storyId,
       title: newStory.title,
       author: newStory.author,
       url: newStory.url,
       username: newStory.username,
       createdAt: newStory.createdAt
-    })
+    }
+
+    const storyInstance = new Story(formattedStory)
+
+    this.stories.unshift(storyInstance);
+
+    return storyInstance;
   }
-
-
 }
 
 

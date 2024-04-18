@@ -11,7 +11,6 @@ import {
   updateUIOnUserLogin,
 } from "./user";
 
-import { Story } from "./models";
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -28,19 +27,17 @@ export function hidePageComponents() {
 }
 
 /** Overall function to kick off the app. */
-let newStory;
+export let newStory;
 export async function start() {
   console.debug("start");
 
   // "Remember logged-in user" and log in, if credentials in localStorage
   await checkForRememberedUser();
   await fetchAndShowStoriesOnStart();
-  console.log("currentUser", currentUser);
-  newStory = await currStoryList.addStory(currentUser,
-    {title: "Test", author: "Me", url: "http://meow.com"});
-  console.log(newStory instanceof Story, "sarahs label")
-  // if we got a logged-in user
-  if (currentUser) await updateUIOnUserLogin();
+
+    // if we got a logged-in user
+    if (currentUser) await updateUIOnUserLogin();
+
 }
 
 // Once the DOM is entirely loaded, begin the app

@@ -2,6 +2,7 @@
 import {
   $allStoriesList,
   $storiesLoadingMsg,
+  $storyForm
 } from "./dom";
 import { Story, StoryList } from "./models";
 import { currentUser } from "./user";
@@ -73,3 +74,38 @@ export async function fetchAndShowStoriesOnStart() {
 
   putStoriesOnPage();
 }
+
+/******************************************************************************
+ * Form: add stories
+ *****************************************************************************/
+
+
+export async function addStory(evt) {
+  console.debug("addStory", evt);
+  evt.preventDefault();
+
+  const qs = $storyForm.querySelector.bind($storyForm);
+  const $failMsg = qs("#StoryForm-fail");
+  $failMsg.classList.add("d-none");
+
+  const title = qs("#StoryForm-title").value;
+  const author = qs("#StoryForm-author").value;
+  const url = qs("#StoryForm-url").value;
+
+  // User.signup retrieves user info from API and returns User instance
+  // which we'll make the globally-available, logged-in user.
+  // User.login retrieves user info from API and returns User instance
+  // which we'll make the globally-available, logged-in user.
+  try {
+    await currStoryList.addStory(currentUser, {title, author, url});
+  } catch (err) {
+    $failMsg.classList.remove("d-none");
+    $failMsg.innerHTML = err.message;
+    console.error(evt);
+    return;
+  }
+
+  $storyForm.reset();
+}
+
+$storyForm.addEventListener("submit", addStory);
