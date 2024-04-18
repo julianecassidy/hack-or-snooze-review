@@ -4,6 +4,7 @@ import {
   $storiesLoadingMsg,
   $storyForm
 } from "./dom";
+import { hidePageComponents } from "./main";
 import { Story, StoryList } from "./models";
 import { currentUser } from "./user";
 
@@ -96,8 +97,9 @@ export async function addStory(evt) {
   // which we'll make the globally-available, logged-in user.
   // User.login retrieves user info from API and returns User instance
   // which we'll make the globally-available, logged-in user.
+  let story;
   try {
-    await currStoryList.addStory(currentUser, {title, author, url});
+    story = await currStoryList.addStory(currentUser, {title, author, url});
   } catch (err) {
     $failMsg.classList.remove("d-none");
     $failMsg.innerHTML = err.message;
@@ -106,6 +108,11 @@ export async function addStory(evt) {
   }
 
   $storyForm.reset();
+
+  hidePageComponents();
+  const $storyHTML = generateStoryMarkup(story);
+  $allStoriesList.prepend($storyHTML);
+  $allStoriesList.classList.remove("d-none");
 }
 
 $storyForm.addEventListener("submit", addStory);

@@ -7,8 +7,10 @@ import {
   $navLogin,
   $navLogOut,
   $navUserProfile,
+  $navAddStory,
   $loginForm,
   $signupForm,
+  $storyForm,
 } from "./dom";
 import { hidePageComponents } from "./main";
 import {
@@ -48,5 +50,19 @@ export function updateNavOnLogin() {
 
   $navLogOut.classList.remove("d-none");
   $navUserProfile.classList.remove("d-none");
+  $navAddStory.classList.remove("d-none");
   $navUserProfile.querySelector("a").innerHTML = `${currentUser.username}`;
 }
+
+/** Show add story form on click "Add Story" */
+export function navAddStoryFormClick(evt){
+  console.debug("navAddStoryFormClick");
+  evt.preventDefault();
+
+  hidePageComponents();
+  $storyForm.classList.remove("d-none");
+}
+
+$navAddStory.addEventListener("click", navAddStoryFormClick);
+
+

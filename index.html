@@ -48,11 +48,14 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
       <ul class="navbar-nav me-2 my-lg-0">
-        <li id="Nav-login" class="nav-item">
-          <a class="nav-link" href="#">Log in/Sign up</a>
+        <li id="Nav-addStory" class="nav-item d-none">
+          <a class="nav-link" href="#">Add Story</a>
         </li>
         <li id="Nav-userProfile" class="nav-item d-none">
           <a class="nav-link" href="#">Profile</a>
+        </li>
+        <li id="Nav-login" class="nav-item">
+          <a class="nav-link" href="#">Log in/Sign up</a>
         </li>
         <li id="Nav-logout" class="nav-item d-none">
           <a class="nav-link" href="#">Logout</a>
@@ -78,7 +81,7 @@
   </section>
 
   <!-- Story form -->
-  <form id="StoryForm" class="account-form">
+  <form id="StoryForm" class="account-form d-none">
     <h4 class="mb-3">Add a Story</h4>
     <div class="mb-3">
       <label for="StoryForm-title" class="form-label">Title</label>
