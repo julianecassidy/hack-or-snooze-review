@@ -39,6 +39,31 @@ class Story {
   getHostName() {
     return new URL(this.url).hostname;
   }
+
+    /** Fetch a single story by id from the API. */
+  static async getStory(id) {
+
+    const response = await fetch(`${BASE_URL}/stories/${id}`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("story not found");
+      return null;
+    }
+
+    const formattedStory = {
+      storyId: data.story.storyId,
+      title: data.story.title,
+      author: data.story.author,
+      url: data.story.url,
+      username: data.story.username,
+      createdAt: data.story.createdAt
+    }
+
+    const storyInstance = new Story(formattedStory)
+
+    return storyInstance;
+  }
 }
 
 /******************************************************************************
@@ -226,6 +251,50 @@ class User {
       token,
     );
   }
+
+  /** Takes a given story and makes it a favorite on the API
+   * and adds it to the user instance's favorites.
+   */
+  async addFavorite(story) {
+    const response = await fetch(
+      `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "token": this.loginToken,
+      })
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("favorite not added");
+      return null;
+    }
+
+    this.favorites.unshift(story);
+  }
+
+    /** Takes a given story and and makes it removes it as
+     * favorite on the API and removes it from the user instance's favorites.
+   */
+    async removeFavorite(story) {
+      const response = await fetch(
+        `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "token": this.loginToken,
+        })
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("favorite not removed");
+        return null;
+      }
+
+      this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
+    }
 }
 
 export { Story, StoryList, User, BASE_URL };

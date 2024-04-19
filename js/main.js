@@ -29,7 +29,6 @@ export function hidePageComponents() {
 }
 
 /** Overall function to kick off the app. */
-export let newStory;
 export async function start() {
   console.debug("start");
 
@@ -39,7 +38,6 @@ export async function start() {
 
     // if we got a logged-in user
     if (currentUser) await updateUIOnUserLogin();
-
 }
 
 // Once the DOM is entirely loaded, begin the app
