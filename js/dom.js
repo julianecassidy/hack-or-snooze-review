@@ -15,3 +15,4 @@ export const $navUserProfile = document.querySelector("#Nav-userProfile");
 export const $navLogOut = document.querySelector("#Nav-logout");
 export const $navAllStories = document.querySelector("#Nav-all");
 export const $navAddStory = document.querySelector("#Nav-addStory");
+export const $navFavorites = document.querySelector("#Nav-favorites");

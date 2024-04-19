@@ -27,11 +27,23 @@ export function generateStoryMarkup(story) {
   const hostName = story.getHostName();
 
   // if a user is logged in, show favorite/not-favorite star
-  const showStar = Boolean(currentUser);
+  const isLoggedIn = Boolean(currentUser);
   const $li = document.createElement("li");
   $li.id = story.storyId;
   $li.classList.add("Story", "mt-2");
+
+
+  let isFav;
+  if (isLoggedIn) {
+    if (currentUser.favorites.some(s => s.storyId === story.storyId)) {
+      isFav = "-fill";
+    } else {
+      isFav = "";
+    }
+  }
+
   $li.innerHTML = `
+      ${isLoggedIn ? `<i class="bi bi-rocket-takeoff${isFav}"></i>` : ""}
       <a href="${story.url}" target="a_blank" class="Story-link">
         ${story.title}
       </a>
@@ -55,6 +67,25 @@ export function putStoriesOnPage() {
   $allStoriesList.innerHTML = "";
 
   for (const story of currStoryList.stories) {
+    const $story = generateStoryMarkup(story);
+    $allStoriesList.append($story);
+  }
+
+  $allStoriesList.classList.remove("d-none");
+
+}
+/******************************************************************************
+ * List favorite stories
+ *****************************************************************************/
+
+/** For in-memory list of favorites, generates markup & put on page. */
+
+export function putFavoritesOnPage() {
+  console.debug("putFavoritesOnPage");
+
+  $allStoriesList.innerHTML = "";
+
+  for (const story of currentUser.favorites) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
@@ -99,7 +130,7 @@ export async function addStory(evt) {
   // which we'll make the globally-available, logged-in user.
   let story;
   try {
-    story = await currStoryList.addStory(currentUser, {title, author, url});
+    story = await currStoryList.addStory(currentUser, { title, author, url });
   } catch (err) {
     $failMsg.classList.remove("d-none");
     $failMsg.innerHTML = err.message;

@@ -8,13 +8,16 @@ import {
   $navLogOut,
   $navUserProfile,
   $navAddStory,
+  $navFavorites,
   $loginForm,
   $signupForm,
   $storyForm,
+  $allStoriesList
 } from "./dom";
 import { hidePageComponents } from "./main";
 import {
   putStoriesOnPage,
+  putFavoritesOnPage
 } from "./stories";
 import { currentUser } from "./user";
 
@@ -51,6 +54,7 @@ export function updateNavOnLogin() {
   $navLogOut.classList.remove("d-none");
   $navUserProfile.classList.remove("d-none");
   $navAddStory.classList.remove("d-none");
+  $navFavorites.classList.remove("d-none");
   $navUserProfile.querySelector("a").innerHTML = `${currentUser.username}`;
 }
 
@@ -65,4 +69,14 @@ export function navAddStoryFormClick(evt){
 
 $navAddStory.addEventListener("click", navAddStoryFormClick);
 
+/** Show favorites list on click "Favorites" */
+export function navFavoritesClick(evt){
+  console.debug("navFavoritesClick");
+  evt.preventDefault();
 
+  hidePageComponents();
+  putFavoritesOnPage();
+  $allStoriesList.classList.remove("d-none");
+}
+
+$navFavorites.addEventListener("click", navFavoritesClick);
